@@ -7,11 +7,13 @@
     <div>
       <div>
         <button
-        @click="UserCreateAccount">
+          class="button-tab"
+          @click="UserCreateAccount">
           create account
         </button>
         <button
-        @click="UserSignIn">
+          class="button-tab"
+          @click="UserSignIn">
           Sign In
         </button>
       </div>
@@ -42,7 +44,8 @@
           <button
             class="submit-button"
             @click="IsSignedIn">
-            Create Account</button>
+            Create Account
+          </button>
         </div>
       </div>
       <div
@@ -80,12 +83,17 @@
           <button
             class="submit-button"
             @click="IsSignedIn">
-            Sign In</button>
+            Sign In
+          </button>
         </div>
       </div>
     </div>
     <p>your name is {{email}}</p>
-    <p> Thanks for creating your account </p>
+    <button
+      class="button-link"
+      @click="IsAnonomous">
+      continue without an account
+    </button>
   </section>
 </template>
 
@@ -129,11 +137,15 @@ export default {
       this.toCreateAccount = false
       console.log('signInButton')
       console.log(this.toCreateAccount)
+      this.$store.commit('setPassword', '')
+      this.password = ''
     },
     UserCreateAccount () {
       this.toCreateAccount = true
       console.log('createAccountButton')
       console.log(this.toCreateAccount)
+      this.$store.commit('setPassword', '')
+      this.password = ''
     },
     setEmail (e) {
       console.log('set email method')
@@ -149,6 +161,15 @@ export default {
         console.log('signed in', this.$store.state.isLoggedIn)
         router.push('/home/homePage')
       }
+    },
+    IsAnonomous () {
+      this.$store.commit('setIsLoggedIn', false)
+      console.log('signed in', this.$store.state.isLoggedIn)
+      router.push('/home/homePage')
+      this.$store.commit('setEmail', '')
+      this.password = ''
+      this.$store.commit('setPassword', '')
+      this.email = ''
     }
   }
 }
@@ -166,7 +187,7 @@ export default {
     width: 50%;
   }
 
-  .input-container{
+  .input-container {
     display: block;
   }
 
@@ -188,5 +209,24 @@ export default {
     font-size: 12px;
     border: 1px solid grey;
     background-color: mediumseagreen;
+  }
+
+  .button-tab {
+    width: 22%;
+    border: 1px solid grey;
+    font-size: 12px;
+    padding: 10px;
+    margin: 10px;
+    background-color: white;
+  }
+
+  .button-tab:active {
+    background-color: green;
+  }
+
+  .button-link {
+    border: none;
+    font-size: 16px;
+    text-decoration: underline;
   }
 </style>

@@ -3,7 +3,7 @@
     <sign-in></sign-in>
     <div class="hello">
       <h1>{{ msg }}</h1>
-      <h2>Please create an account</h2>
+      <h2>Please create an account here</h2>
     </div>
     <div class="container">
       <div class="input-container">
