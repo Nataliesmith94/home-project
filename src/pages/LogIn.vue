@@ -24,21 +24,21 @@
           <div class="input-container">
             <p class="input-text">Email:</p>
             <input
+              id="email"
+              v-model="email"
               class="input-box"
               type="email"
-              id="email"
               name="email"
-              v-model="email"
               @input="setEmail">
           </div>
           <div class="input-container">
             <p class="input-text">Password:</p>
             <input
+              id="password"
+              v-model="password"
               class="input-box"
               type="password"
-              id="password"
               name="password"
-              v-model="password"
               @input="setPassword">
           </div>
           <button
@@ -55,29 +55,29 @@
           <div class="input-container">
             <p class="input-text">Email:</p>
             <input
+              id="email"
+              v-model="email"
               class="input-box"
               type="email"
-              id="email"
               name="email"
-              v-model="email"
               @input="setEmail">
           </div>
           <div class="input-container">
             <p class="input-text">Password:</p>
             <input
+              id="passwordConfirm"
+              v-model="password"
               class="input-box"
               type="password"
-              id="password1"
-              name="password1"
-              v-model="password"
+              name="passwordConfirm"
               @input="setPassword">
           </div>
           <div class="input-container">
             <p class="input-text">Confirm Password:</p>
             <input
+              id="password2"
               class="input-box"
               type="password"
-              id="password2"
               name="password2">
           </div>
           <button
@@ -88,7 +88,7 @@
         </div>
       </div>
     </div>
-    <p>your name is {{email}}</p>
+    <p>your name is {{ email }}</p>
     <button
       class="button-link"
       @click="IsAnonomous">
@@ -135,40 +135,32 @@ export default {
   methods: {
     UserSignIn () {
       this.toCreateAccount = false
-      console.log('signInButton')
-      console.log(this.toCreateAccount)
-      this.$store.commit('setPassword', '')
+      this.$store.commit('setPassword', '');
       this.password = ''
     },
     UserCreateAccount () {
       this.toCreateAccount = true
-      console.log('createAccountButton')
-      console.log(this.toCreateAccount)
-      this.$store.commit('setPassword', '')
+      this.$store.commit('setPassword', '');
       this.password = ''
     },
     setEmail (e) {
-      console.log('set email method')
       this.$store.commit('setEmail', e.target.value)
     },
     setPassword (e) {
-      console.log('set password method')
       this.$store.commit('setPassword', e.target.value)
     },
     IsSignedIn () {
       if (this.$store.state.email && this.$store.state.password) {
-        this.$store.commit('setIsLoggedIn', true)
-        console.log('signed in', this.$store.state.isLoggedIn)
+        this.$store.commit('setIsLoggedIn', true);
         router.push('/home/homePage')
       }
     },
     IsAnonomous () {
-      this.$store.commit('setIsLoggedIn', false)
-      console.log('signed in', this.$store.state.isLoggedIn)
-      router.push('/home/homePage')
-      this.$store.commit('setEmail', '')
-      this.password = ''
-      this.$store.commit('setPassword', '')
+      this.$store.commit('setIsLoggedIn', false);
+      router.push('/home/homePage');
+      this.$store.commit('setEmail', '');
+      this.password = '';
+      this.$store.commit('setPassword', '');
       this.email = ''
     }
   }

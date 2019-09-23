@@ -36,7 +36,7 @@
 import router from '@/router/index'
 
 export default {
-  name: 'signIn',
+  name: 'SignIn',
   data () {
     return {
       msg: 'This is the Login page'
@@ -62,17 +62,14 @@ export default {
   },
   methods: {
     setEmail (e) {
-      console.log('set email method')
       this.$store.commit('setEmail', e.target.value)
     },
     setPassword (e) {
-      console.log('set password method')
       this.$store.commit('setPassword', e.target.value)
     },
     IsSignedIn () {
       if (this.$store.state.email && this.$store.state.password) {
-        this.$store.commit('setIsLoggedIn', true)
-        console.log('signed in', this.$store.state.isLoggedIn)
+        this.$store.commit('setIsLoggedIn', true);
         router.push('HomePage')
       }
     }

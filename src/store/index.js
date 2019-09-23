@@ -6,7 +6,11 @@ Vue.use(Vuex)
 const state = {
   email: '',
   password: '',
-  isLoggedIn: false
+  isLoggedIn: false,
+  user: {
+    firstName: '',
+    surname: ''
+  }
 }
 
 const mutations = {
@@ -18,6 +22,9 @@ const mutations = {
   },
   setIsLoggedIn (state, isLoggedIn = true) {
     state.isLoggedIn = isLoggedIn
+  },
+  setFirstName (state, firstName) {
+    state.firstName = firstName
   }
 }
 

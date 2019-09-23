@@ -1,6 +1,5 @@
 <template>
   <section>
-    <sign-in></sign-in>
     <div class="hello">
       <h1>{{ msg }}</h1>
       <h2>Please create an account here</h2>
@@ -9,21 +8,21 @@
       <div class="input-container">
         <p class="input-text">Email:</p>
         <input
+          id="email"
+          v-model="email"
           class="input-box"
           type="email"
-          id="email"
           name="email"
-          v-model="email"
           @input="setEmail">
       </div>
       <div class="input-container">
         <p class="input-text">Password:</p>
         <input
+          id="password"
+          v-model="password"
           class="input-box"
           type="password"
-          id="password"
           name="password"
-          v-model="password"
           @input="setPassword">
       </div>
       <button
@@ -31,7 +30,7 @@
         @click="IsSignedIn">
         Create Account</button>
     </div>
-    <p>your name is {{email}}</p>
+    <p>your name is {{ email }}</p>
     <p> Thanks for creating your account </p>
   </section>
 </template>
@@ -70,17 +69,14 @@ export default {
   },
   methods: {
     setEmail (e) {
-      console.log('set email method')
       this.$store.commit('setEmail', e.target.value)
     },
     setPassword (e) {
-      console.log('set password method')
       this.$store.commit('setPassword', e.target.value)
     },
     IsSignedIn () {
       if (this.$store.state.email && this.$store.state.password) {
         this.$store.commit('setIsLoggedIn', true)
-        console.log('signed in', this.$store.state.isLoggedIn)
         router.push('HomePage')
       }
     }

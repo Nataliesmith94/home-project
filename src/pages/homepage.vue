@@ -1,9 +1,10 @@
 <template>
   <div>
-    <h1>{{ greeting }}</h1>
-    <p>{{greeting2}}</p>
+    <h1>{{ account }}*****new</h1>
+    <!--    <p>{{ greeting2 }}</p>-->
     <h2>page rendered</h2>
-    <p>Email Address: {{email}}</p>
+    <p>Email Address: {{ email }}</p>
+    <p>Name: {{ firstName }}</p>
   </div>
 </template>
 
@@ -13,8 +14,8 @@ import accountService from '@/services/account'
 export default {
   data () {
     return {
-      greeting: '',
-      greeting2: ''
+      account: {},
+      firstName: ''
     }
   },
 
@@ -26,8 +27,8 @@ export default {
     }
   },
   async mounted () {
-    this.greeting = (await accountService.getData()).data
-    this.greeting2 = (await accountService.getPersonalisedData('natalie')).data
+    this.account = (await accountService.getData(this.email)).data
+    this.firstName = (await  accountService.getFirstName(this.email)).data    // this.greeting2 = (await accountService.getPersonalisedData('natalie')).data
   }
 }
 </script>
