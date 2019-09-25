@@ -1,16 +1,12 @@
 <template>
   <div>
-    <h1>{{ account }}*****new</h1>
-    <!--    <p>{{ greeting2 }}</p>-->
-    <h2>page rendered</h2>
-    <p>Email Address: {{ email }}</p>
-    <p>Name: {{ firstName }}</p>
+    <h1>Email:: {{ getEmail }}</h1>
+    <h1>First Name:: {{ getFirstName }}</h1>
+    <h1>Surname:: {{ getSurname }}</h1>
   </div>
 </template>
 
 <script>
-import accountService from '@/services/account'
-
 export default {
   data () {
     return {
@@ -20,15 +16,18 @@ export default {
   },
 
   computed: {
-    email: {
-      get () {
-        return this.$store.state.email
-      }
-    }
+    getEmail() {
+      return this.$store.getters.EMAIL
+    },
+    getFirstName() {
+      return this.$store.getters.FIRSTNAME
+    },
+    getSurname() {
+      return this.$store.getters.SURNAME
+    },
   },
   async mounted () {
-    this.account = (await accountService.getData(this.email)).data
-    this.firstName = (await  accountService.getFirstName(this.email)).data    // this.greeting2 = (await accountService.getPersonalisedData('natalie')).data
+    this.$store.dispatch('GET_ACCOUNT', this.$store.state.email)
   }
 }
 </script>

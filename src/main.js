@@ -6,6 +6,9 @@ import router from './router'
 import store from './store'
 import Vuex from "vuex";
 
+// import './static/styles/main.scss';
+// import './static/styles/components/login.scss'
+
 Vue.config.productionTip = false
 
 Vue.use(Vuex)

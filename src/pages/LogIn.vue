@@ -1,50 +1,50 @@
 <template>
   <section>
-    <div class="hello">
+    <div class="login">
       <h1>{{ msg }}</h1>
       <h2>Please create an account</h2>
     </div>
     <div>
       <div>
         <button
-          class="button-tab"
+          class="button__tab"
           @click="UserCreateAccount">
           create account
         </button>
         <button
-          class="button-tab"
+          class="button__tab"
           @click="UserSignIn">
           Sign In
         </button>
       </div>
       <div
         v-if="!toCreateAccount"
-        class="sign-in">
-        <div class="container">
-          <div class="input-container">
-            <p class="input-text">Email:</p>
+        class="login">
+        <div class="login__container">
+          <div class="login__input-container">
+            <p class="login__input-text">Email:</p>
             <input
               id="email"
               v-model="email"
-              class="input-box"
+              class="login__input-box"
               type="email"
               name="email"
               @input="setEmail">
           </div>
-          <div class="input-container">
-            <p class="input-text">Password:</p>
+          <div class="login__input-container">
+            <p class="login__input-text">Password:</p>
             <input
               id="password"
               v-model="password"
-              class="input-box"
+              class="login__input-box"
               type="password"
               name="password"
               @input="setPassword">
           </div>
           <button
-            class="submit-button"
+            class="button__submit"
             @click="IsSignedIn">
-            Create Account
+            Sign in
           </button>
         </div>
       </div>
@@ -52,45 +52,47 @@
         v-if="toCreateAccount"
         class="create-account">
         <div class="container">
-          <div class="input-container">
-            <p class="input-text">Email:</p>
+          <div class="login__input-container">
+            <p class="login__input-text">Email:</p>
             <input
               id="email"
               v-model="email"
-              class="input-box"
+              class="login__input-box"
               type="email"
               name="email"
               @input="setEmail">
           </div>
-          <div class="input-container">
-            <p class="input-text">Password:</p>
+          <div class="login__input-container">
+            <p class="login__input-text">Password:</p>
             <input
-              id="passwordConfirm"
+              id="password"
               v-model="password"
-              class="input-box"
+              class="login__input-box"
               type="password"
-              name="passwordConfirm"
+              name="password"
               @input="setPassword">
           </div>
-          <div class="input-container">
-            <p class="input-text">Confirm Password:</p>
+          <div class="login__input-container">
+            <p class="login__input-text">Confirm Password:</p>
             <input
-              id="password2"
-              class="input-box"
+              id="passwordConfirm"
+              v-model="passwordConfirm"
+              class="login__input-box"
               type="password"
-              name="password2">
+              name="passwordConfirm">
           </div>
           <button
-            class="submit-button"
-            @click="IsSignedIn">
-            Sign In
+            class="button__submit"
+            @click="createAccount">
+            Create Account
           </button>
         </div>
       </div>
     </div>
     <p>your name is {{ email }}</p>
+    <h2>{{ result }}</h2>
     <button
-      class="button-link"
+      class="button__link"
       @click="IsAnonomous">
       continue without an account
     </button>
@@ -99,21 +101,17 @@
 
 <script>
 import router from '@/router/index'
+import accountService from '@/services/account'
 
 export default {
   name: 'HelloWorld',
   data () {
     return {
       msg: 'Login page',
-      toCreateAccount: false
+      toCreateAccount: false,
+      result: ''
     }
   },
-  // props: {
-  //   toCreateAccount: {
-  //     type: Boolean,
-  //     default: false
-  //   }
-  // },
   computed: {
     email: {
       get () {
@@ -152,8 +150,21 @@ export default {
     IsSignedIn () {
       if (this.$store.state.email && this.$store.state.password) {
         this.$store.commit('setIsLoggedIn', true);
-        router.push('/home/homePage')
+        router.push('/home')
       }
+    },
+    createAccount() {
+      let data = {
+        email:this.$store.state.email,
+        password: this.$store.state.password
+      };
+
+      accountService.postAccount(data)
+        .then(response => {
+        this.result = response.data,
+        this.$store.commit('setIsLoggedIn', true)
+        router.push('/home')
+        });
     },
     IsAnonomous () {
       this.$store.commit('setIsLoggedIn', false);
@@ -173,29 +184,29 @@ export default {
     font-weight: normal;
   }
 
-  .container {
+  .login__container {
     display: inline-block;
     justify-content: center;
     width: 50%;
   }
 
-  .input-container {
+  .login__input-container {
     display: block;
   }
 
-  .input-box {
+  .login__input-box {
     width: 100%;
     height: 30px;
     border: 1px solid grey;
   }
 
-  .input-text {
+  .login__input-text {
     margin: 20px 0px 5px 0;
     text-align: left;
     width: 100%;
   }
 
-  .submit-button {
+  .button__submit {
     margin: 15px;
     padding: 15px;
     font-size: 12px;
@@ -203,7 +214,7 @@ export default {
     background-color: mediumseagreen;
   }
 
-  .button-tab {
+  .button__tab {
     width: 22%;
     border: 1px solid grey;
     font-size: 12px;
@@ -212,11 +223,11 @@ export default {
     background-color: white;
   }
 
-  .button-tab:active {
+  .button__tab:active {
     background-color: green;
   }
 
-  .button-link {
+  .button__link {
     border: none;
     font-size: 16px;
     text-decoration: underline;
